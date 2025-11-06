@@ -1,0 +1,30 @@
+spring:
+  application:
+    name: tickets-app
+  datasource:
+    # Database connection URL
+    # Format: jdbc:postgresql://HOST:PORT/DATABASE_NAME?sslmode=require
+    url: jdbc:postgresql://your-database-host:5432/your-database-name
+    username: your-database-username
+    password: your-database-password
+  jpa:
+    hibernate:
+      # Options: create, create-drop, update, validate, none
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+  security:
+    oauth2:
+        resourceserver:
+            jwt:
+              # Keycloak issuer URI
+              # Format: http://HOST:PORT/realms/REALM_NAME
+              issuer-uri: http://localhost:9090/realms/tickets-app
+
+# Instructions:
+# 1. Copy this file to application.yml in the same directory
+# 2. Replace all placeholder values with your actual configuration
+# 3. Never commit application.yml to version control
+
