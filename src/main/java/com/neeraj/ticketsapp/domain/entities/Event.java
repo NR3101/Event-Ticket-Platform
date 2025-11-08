@@ -1,7 +1,6 @@
-package com.neeraj.ticketsapp.domain;
+package com.neeraj.ticketsapp.domain.entities;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -15,7 +14,6 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 public class Event extends BaseEntity{
-    @NotBlank(message = "Name is mandatory")
     @Column(nullable = false)
     private String name;
 
@@ -25,7 +23,6 @@ public class Event extends BaseEntity{
     @Column(name = "end_time")
     private LocalDateTime endTime;
 
-    @NotBlank(message = "Venue is mandatory")
     @Column(nullable = false)
     private String venue;
 

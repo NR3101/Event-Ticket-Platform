@@ -1,4 +1,4 @@
-package com.neeraj.ticketsapp.domain;
+package com.neeraj.ticketsapp.domain.entities;
 
 import jakarta.persistence.*;
 import lombok.*;

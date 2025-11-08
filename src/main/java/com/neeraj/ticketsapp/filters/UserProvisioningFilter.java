@@ -1,6 +1,6 @@
 package com.neeraj.ticketsapp.filters;
 
-import com.neeraj.ticketsapp.domain.User;
+import com.neeraj.ticketsapp.domain.entities.User;
 import com.neeraj.ticketsapp.repositories.UserRepository;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

@@ -1,4 +1,4 @@
-package com.neeraj.ticketsapp.domain;
+package com.neeraj.ticketsapp.domain.entities;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
@@ -16,15 +16,15 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 public class TicketType extends BaseEntity{
-    @NotBlank(message = "Name is mandatory")
     @Column(nullable = false)
     private String name;
 
-    @NotNull(message = "Price is mandatory")
     @Column(nullable = false)
     private Double price;
 
-    private Integer quantityAvailable;
+    private String description;
+
+    private Integer totalAvailable;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "event_id", nullable = false)
