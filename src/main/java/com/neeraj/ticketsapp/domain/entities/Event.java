@@ -46,6 +46,6 @@ public class Event extends BaseEntity{
     @ManyToMany(mappedBy = "staffingEvents")
     private List<User> staff = new ArrayList<>();
 
-    @OneToMany(mappedBy = "event", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "event", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<TicketType> ticketTypes = new ArrayList<>();
 }

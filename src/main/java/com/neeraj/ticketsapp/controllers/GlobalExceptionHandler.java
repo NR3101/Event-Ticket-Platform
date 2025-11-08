@@ -1,6 +1,9 @@
 package com.neeraj.ticketsapp.controllers;
 
 import com.neeraj.ticketsapp.domain.dtos.ErrorDTO;
+import com.neeraj.ticketsapp.exceptions.EventNotFoundException;
+import com.neeraj.ticketsapp.exceptions.EventUpdateException;
+import com.neeraj.ticketsapp.exceptions.TicketTypeNotFoundException;
 import com.neeraj.ticketsapp.exceptions.UserNotFoundException;
 import jakarta.validation.ConstraintViolationException;
 import lombok.extern.slf4j.Slf4j;
@@ -14,8 +17,38 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @Slf4j
 public class GlobalExceptionHandler {
 
+    @ExceptionHandler(EventUpdateException.class)
+    public ResponseEntity<ErrorDTO> handleEventUpdateException(EventUpdateException ex) {
+        log.error("An EventUpdateException occurred: ", ex);
+
+        ErrorDTO errorDTO = ErrorDTO.builder()
+                .message("Failed to update event.")
+                .build();
+        return new ResponseEntity<>(errorDTO, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @ExceptionHandler(TicketTypeNotFoundException.class)
+    public ResponseEntity<ErrorDTO> handleTicketTypeNotFoundException(TicketTypeNotFoundException ex) {
+        log.error("A TicketTypeNotFoundException occurred: ", ex);
+
+        ErrorDTO errorDTO = ErrorDTO.builder()
+                .message("Ticket type not found.")
+                .build();
+        return new ResponseEntity<>(errorDTO, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(EventNotFoundException.class)
+    public ResponseEntity<ErrorDTO> handleEventNotFoundException(EventNotFoundException ex) {
+        log.error("A EventNotFoundException occurred: ", ex);
+
+        ErrorDTO errorDTO = ErrorDTO.builder()
+                .message("Event not found.")
+                .build();
+        return new ResponseEntity<>(errorDTO, HttpStatus.NOT_FOUND);
+    }
+
     @ExceptionHandler(UserNotFoundException.class)
-    public ResponseEntity<ErrorDTO> handleUserNotFoundException(Exception ex) {
+    public ResponseEntity<ErrorDTO> handleUserNotFoundException(UserNotFoundException ex) {
         log.error("A UserNotFoundException occurred: ", ex);
 
         ErrorDTO errorDTO = ErrorDTO.builder()
