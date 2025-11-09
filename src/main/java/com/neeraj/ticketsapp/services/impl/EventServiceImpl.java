@@ -4,6 +4,7 @@ import com.neeraj.ticketsapp.domain.CreateEventRequest;
 import com.neeraj.ticketsapp.domain.UpdateEventRequest;
 import com.neeraj.ticketsapp.domain.UpdateTicketTypeRequest;
 import com.neeraj.ticketsapp.domain.entities.Event;
+import com.neeraj.ticketsapp.domain.entities.EventStatus;
 import com.neeraj.ticketsapp.domain.entities.TicketType;
 import com.neeraj.ticketsapp.domain.entities.User;
 import com.neeraj.ticketsapp.exceptions.EventNotFoundException;
@@ -146,5 +147,20 @@ public class EventServiceImpl implements EventService {
                 .orElseThrow(() -> new EventNotFoundException("Event not found or does not belong to organizer"));
 
         eventRepository.delete(existingEvent);
+    }
+
+    @Override
+    public Page<Event> listPublishedEvents(Pageable pageable) {
+        return eventRepository.findByStatus(EventStatus.PUBLISHED, pageable);
+    }
+
+    @Override
+    public Page<Event> searchPublishedEvents(String query, Pageable pageable) {
+        return eventRepository.searchEvents(query, pageable);
+    }
+
+    @Override
+    public Optional<Event> getPublishedEventDetails(UUID eventId) {
+        return eventRepository.findByIdAndStatus(eventId, EventStatus.PUBLISHED);
     }
 }
