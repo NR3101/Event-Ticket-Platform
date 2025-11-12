@@ -1,10 +1,7 @@
 package com.neeraj.ticketsapp.controllers;
 
 import com.neeraj.ticketsapp.domain.dtos.ErrorDTO;
-import com.neeraj.ticketsapp.exceptions.EventNotFoundException;
-import com.neeraj.ticketsapp.exceptions.EventUpdateException;
-import com.neeraj.ticketsapp.exceptions.TicketTypeNotFoundException;
-import com.neeraj.ticketsapp.exceptions.UserNotFoundException;
+import com.neeraj.ticketsapp.exceptions.*;
 import jakarta.validation.ConstraintViolationException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -16,6 +13,36 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 @Slf4j
 public class GlobalExceptionHandler {
+
+    @ExceptionHandler(TicketsSoldOutException.class)
+    public ResponseEntity<ErrorDTO> handleTicketsSoldOutException(TicketsSoldOutException ex) {
+        log.error("A TicketsSoldOutException occurred: ", ex);
+
+        ErrorDTO errorDTO = ErrorDTO.builder()
+                .message("Tickets are sold out.")
+                .build();
+        return new ResponseEntity<>(errorDTO, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(QRCodeNotFoundException.class)
+    public ResponseEntity<ErrorDTO> handleQRCodeNotFoundException(QRCodeNotFoundException ex) {
+        log.error("A QRCodeNotFoundException occurred: ", ex);
+
+        ErrorDTO errorDTO = ErrorDTO.builder()
+                .message("QR code not found.")
+                .build();
+        return new ResponseEntity<>(errorDTO, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(QRCodeGenerationException.class)
+    public ResponseEntity<ErrorDTO> handleQRCodeGenerationException(QRCodeGenerationException ex) {
+        log.error("A QRCodeGenerationException occurred: ", ex);
+
+        ErrorDTO errorDTO = ErrorDTO.builder()
+                .message("Failed to generate QR code.")
+                .build();
+        return new ResponseEntity<>(errorDTO, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
 
     @ExceptionHandler(EventUpdateException.class)
     public ResponseEntity<ErrorDTO> handleEventUpdateException(EventUpdateException ex) {

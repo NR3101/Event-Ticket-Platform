@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
 
+import static com.neeraj.ticketsapp.util.JwtUtil.parseUserIdFromJwt;
+
 @RestController
 @RequestMapping("/api/v1/events")
 @RequiredArgsConstructor
@@ -85,7 +87,4 @@ public class EventController {
         return ResponseEntity.noContent().build();
     }
 
-    private UUID parseUserIdFromJwt(Jwt jwt) {
-        return UUID.fromString(jwt.getSubject());
-    }
 }
